@@ -1,19 +1,16 @@
 #include <iostream>
 #include <vector>
-#include <algorithm> // 給 std::shuffle 洗牌使用
-#include <random>    // 給亂數產生器使用
+#include <algorithm> 
+#include <random>  
 using namespace std;
  
-// 表示單張撲克牌的類別
 class Card {
 public:
     string colors; // 儲存撲克牌的花色
     string rank;   // 儲存撲克牌的數值
  
-    // 建立 constructor 來初始化物件，當 Card 物件建立時，它會自動執行這個函式，並把 s 和 r 的值存入 colors 和 rank
     Card(string s, string r) : colors(s), rank(r) {} 
  
-    // 顯示撲克牌的資訊
     void display() const { 
         cout << rank << " of " << colors << endl;
     }
