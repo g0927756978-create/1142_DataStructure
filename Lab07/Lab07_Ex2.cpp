@@ -3,9 +3,9 @@
 #include <cstring>
 using namespace std;
 
-// 定義 Stack 的節點結構
+// 定義Stack的節點結構
 struct Node {
-    char data;  // 存儲字符 (運算子或括號)
+    char data;  // 存儲字符
     Node* next; // 指向下一個節點
 };
 
@@ -16,7 +16,7 @@ private:
 public:
     Stack() { top = nullptr; } // 初始化堆疊
 
-    // Push 操作：將元素放入堆疊
+    // Push
     void push(char ch) {
         Node* newNode = new Node; // 創建新節點
         newNode->data = ch;       // 存入數據
@@ -24,7 +24,7 @@ public:
         top = newNode;            // 更新頂端指標
     }
 
-    // Pop 操作：移除並回傳頂端元素
+    // Pop 
     char pop() {
         if (isEmpty()) return '\0'; // 若堆疊為空，回傳空字符
         char ch = top->data;         // 取得頂端元素
@@ -34,7 +34,7 @@ public:
         return ch;                   // 回傳彈出的元素
     }
 
-    // Peek 操作：取得頂端元素但不移除
+    // Peek 
     char peek() {
         return (top ? top->data : '\0');
     }
@@ -64,7 +64,7 @@ void InfixToPostfix(const char* infix, char* postfix) {
     while (infix[i] != '\0') {
         char token = infix[i];
 
-        // 2. 如果讀進的字元為運算元 (字母或數字)，則直接輸出到後序式中
+        // 2. 如果讀進的字元為運算元，則直接輸出到後序式中
         if (isalnum(token)) {
             postfix[j++] = token;
         } 
@@ -83,17 +83,17 @@ void InfixToPostfix(const char* infix, char* postfix) {
         } 
         // 5. 遇到運算子 (+, -, *, /) 時的處理
         else {
-            // 與堆疊頂端的運算子比較優先權：如果外面的優先權較小或等於時，則 pop 並輸出
+            // 與堆疊頂端的運算子比較優先權：如果外面的優先權較小或等於時，則pop並輸出
             while (!s.isEmpty() && precedence(s.peek()) >= precedence(token)) {
                 postfix[j++] = s.pop();
             }
-            // 再把外面這個運算子 push 進去堆疊
+            // 再把外面這個運算子push進去堆疊
             s.push(token);
         }
         i++;
     }
 
-    // 6. 中序式讀完後，如果運算子堆疊不為空，則將其內的運算子逐一 pop 出來，輸出到後序式
+    // 6. 中序式讀完後，如果運算子堆疊不為空，則將其內的運算子逐一pop出來，輸出到後序式
     while (!s.isEmpty()) {
         postfix[j++] = s.pop();
     }
