@@ -15,12 +15,12 @@ vector<int> readFromFile(const string& filename) {
     }
 
     string line;
-    while (getline(file, line)) { // 持續讀取整行內容
-        stringstream ss(line);    // 創建字符串流
+    while (getline(file, line)) {
+        stringstream ss(line);    
         string value;
-        while (getline(ss, value, ',')) { // 用逗號分隔值
+        while (getline(ss, value, ',')) { 
             try {
-                arr.push_back(stoi(value)); // 將字符串轉換為整數並存入向量
+                arr.push_back(stoi(value)); 
             }
             catch (exception& e) {
                 cerr << "Invalid number format in file: " << value << endl;
@@ -32,7 +32,7 @@ vector<int> readFromFile(const string& filename) {
     return arr;
 }
 
-//最大堆積 (Max Heap)
+// 最大堆積 (Max Heap) 類別
 class MaxHeap {
 public:
     vector<int> heap; 
@@ -71,48 +71,9 @@ public:
     }
 };
 
-//最小堆積 (Min Heap)
-class MinHeap {
-public:
-    vector<int> heap; 
-
-    void buildMinHeap(vector<int>& arr) {  
-        heap = arr;
-        for (int i = (heap.size() / 2) - 1; i >= 0; i--) { 
-            heapify(i);
-        }
-    }
-
-    void heapify(int i) {
-        int smallest = i;         
-        int left = 2 * i + 1;     
-        int right = 2 * i + 2;    
-
-        if (left < heap.size() && heap[left] < heap[smallest]) {
-            smallest = left;
-        }
-
-        if (right < heap.size() && heap[right] < heap[smallest]) {
-            smallest = right;
-        }
-
-        if (smallest != i) {
-            swap(heap[i], heap[smallest]); 
-            heapify(smallest);             
-        }
-    }
-
-    void printHeap() {
-        for (int val : heap) {
-            cout << val << " ";
-        }
-        cout << endl;
-    }
-};
-
 int main() {
- 
-    string filename = "input3.txt"; 
+    // 請確認檔名與路徑
+    string filename = "input1.txt"; 
     vector<int> arr = readFromFile(filename);
     
     if (arr.empty()) {
@@ -120,34 +81,18 @@ int main() {
         return -1;
     }
 
-    // 建立 Max Heap 與 Min Heap
     MaxHeap maxHeap;
     maxHeap.buildMaxHeap(arr); 
 
-    MinHeap minHeap;
-    minHeap.buildMinHeap(arr);
-
-    // 1. 輸出原始陣列 (給 Max Heap)
+    // 輸出
     cout << "Input Array: ";
     for (int val : arr) {
         cout << val << " ";
     }
     cout << endl;
 
-    // 2. 輸出 Max Heap
     cout << "Max Heap: ";
     maxHeap.printHeap();
-
-    // 3. 再次輸出原始陣列 (給 Min Heap)
-    cout << "Input Array: ";
-    for (int val : arr) {
-        cout << val << " ";
-    }
-    cout << endl;
-
-    // 4. 輸出 Min Heap
-    cout << "Min Heap: ";
-    minHeap.printHeap();
 
     system("pause");
     return 0;
